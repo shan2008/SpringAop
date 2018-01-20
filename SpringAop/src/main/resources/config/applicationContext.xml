@@ -1,0 +1,42 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <context:component-scan base-package="youshan.com" />
+
+    <!--视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/view/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <bean id="pointAdvice" class="youshan.com.AspectClass2"/>
+  <aop:config>
+        <aop:pointcut id="mypointCut" expression="execution(* youshan.com.*.*(..))"/>
+        <aop:aspect ref="pointAdvice">
+            <aop:before method="before" pointcut-ref="mypointCut"/>
+            <aop:after method="after" pointcut-ref="mypointCut"/>
+            <aop:around method="around" pointcut-ref="mypointCut"/>
+            <aop:after-returning method="afterReturn" pointcut-ref="mypointCut"/>
+        </aop:aspect>
+    </aop:config>
+
+<!--
+    <mvc:resources mapping="/view/**" location="/view/" />
+   &lt;!&ndash; <mvc:default-servlet-handler/>&ndash;&gt;
+    <mvc:annotation-driven/>-->
+
+    <!--<aop:aspectj-autoproxy />-->
+
+</beans>

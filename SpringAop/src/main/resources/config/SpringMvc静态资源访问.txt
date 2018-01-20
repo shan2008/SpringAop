@@ -1,0 +1,18 @@
+https://my.oschina.net/ajavaloser/blog/76484 参考
+1.第一种解决方案
+<servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>/static/*</url-pattern>
+</servlet-mapping>
+这种利用default servlet访问静态资源的方式在tomcat 6.0.30及以后版本中已经被禁用了
+
+2.另一种是用<mvc:resources/>，不过这个标签好像在springmvc3.0.4之前有问题，不过之后的应该没问题了
+<mvc:resources mapping="/view/**" location="/view/" />
+<mvc:annotation-driven/> 一定要加否则Controller 404
+
+3.
+  <mvc:annotation-driven/>(不加就404)
+  <mvc:default-servlet-handler/>
+
+4.InternalResourceViewResolver 只支持解析jsp,如果把view下inde页面变为html那么找不到映射
+ 那就按照静态资源来找，采用2,3两种方法。
