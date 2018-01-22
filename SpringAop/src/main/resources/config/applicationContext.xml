@@ -16,15 +16,15 @@
     <context:component-scan base-package="youshan.com" />
 
     <!--视图解析器-->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+   <!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/view/"></property>
         <property name="suffix" value=".jsp"></property>
-    </bean>
+    </bean>-->
 
-    <bean id="pointAdvice" class="youshan.com.AspectClass2"/>
+    <bean id="annotationAspect" class="youshan.com.AnnotationAspect"/>
   <aop:config>
-        <aop:pointcut id="mypointCut" expression="execution(* youshan.com.*.*(..))"/>
-        <aop:aspect ref="pointAdvice">
+        <aop:pointcut id="mypointCut" expression="@annotation(youshan.com.LoginCountAnnotation))"/>
+        <aop:aspect ref="annotationAspect">
             <aop:before method="before" pointcut-ref="mypointCut"/>
             <aop:after method="after" pointcut-ref="mypointCut"/>
             <aop:around method="around" pointcut-ref="mypointCut"/>
@@ -32,11 +32,10 @@
         </aop:aspect>
     </aop:config>
 
-<!--
+   <!--
     <mvc:resources mapping="/view/**" location="/view/" />
    &lt;!&ndash; <mvc:default-servlet-handler/>&ndash;&gt;
     <mvc:annotation-driven/>-->
-
     <!--<aop:aspectj-autoproxy />-->
 
 </beans>

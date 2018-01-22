@@ -27,4 +27,9 @@ public class TestController {
         System.out.println("执行.....");
         return "index";
     }
+
+    @LoginCountAnnotation(getCount = 5)
+    public int  login(){
+        return 0;
+    }
 }
